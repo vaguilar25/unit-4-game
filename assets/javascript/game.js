@@ -6,6 +6,10 @@ $(function () {
         this.attackPower=attPow;
         this.counterAttackPower=countAttPow;
         this.healthPoints=hPoints;
+
+        this.getHealthpoint = function() {
+            this.healthPoints
+        }   
     };
 
     var obiwanCharacter= new gameCharacter("obiwan",8,10,120);
@@ -13,18 +17,56 @@ $(function () {
     var sidiousCharacter= new gameCharacter("sidious",10,20,150);
     var maulCharacter= new gameCharacter("maul",15,25,180);
     
+    var characterHealthPoints = 0;
+    var defenderHealthPoints=0;
+    var attackTimes = 1;
     $(document).on("click", "#attackButton", function (event) {
-       //var currentCharacter = $(".imageChar").data();
-       var currentCharacter = $(".imageChar").attr("data");
-       var currentDefender = $(".imageDefender").attr("data");
+        $("#enemies").click(function () { return true; });
+       //Get Character and defender names.
+       var currentCharacter = $(".imageChar").attr("data") + "Character"; 
+       var currentDefender = $(".imageDefender").attr("data") + "Character";
+      
+     
+       attackHpDecrease(currentCharacter,currentDefender)
 
+       
+
+       
+        
 
        console.log(currentCharacter + " vs " + currentDefender);
     });
 
     //Function healthPoints Character decrease
-    function healthPointsDecrease(nameChar) {
+    function attackHpDecrease(currentCharacter,currentDefender) {
         
+        //Here we reduce the character attack power
+        attackCharacterPower = eval(currentCharacter).attackPower * attackTimes;
+
+        //get the character and defender Objects HealtPoints
+        eval(currentCharacter).healthPoints = 
+        eval(currentCharacter).healthPoints - eval(currentDefender).counterAttackPower;
+        
+        eval(currentDefender).healthPoints = 
+        eval(currentDefender).healthPoints - attackCharacterPower;
+
+        //increase attack counter
+        attackTimes++
+
+        //update DOM with new healthpoints
+        $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
+        $("#defenderHealtPoints").text(eval(currentDefender).healthPoints);
+
+        if ( eval(currentDefender).healthPoints < 0 &&  eval(currentCharacter).healthPoints >0) {
+            $(".imageDefender").remove();
+            $("#defenderHealtPoints").text("");
+            $("#attackButton").prop("disabled",true);
+          //  $("#enemies").click(function () { return true; });
+            $("#enemies").prop("disabled",false);
+        }
+
+        console.log("CurrentCharacterHP: " + eval(currentCharacter).healthPoints);
+        console.log("CurrentDefenderHP: " + eval(currentDefender).healthPoints);
     }
 
     //Function healthPoints Defender Decrease
@@ -116,7 +158,7 @@ $(function () {
             
             case "obiwan":
                 //move Characters to Enemies and change the class
-                $("#obi").appendTo("#defender");
+                $("#obi").prependTo("#defender");
                 moveEnemiToDefender("#obi");
                 //var enemiesLeft=["luk","sid"]; 
                 //disableClickOnEnemi(enemiesLeft);
@@ -125,7 +167,7 @@ $(function () {
 
             case "luke":
                 //move Characters to Enemies and change the class
-                $("#luk").appendTo("#defender");
+                $("#luk").prependTo("#defender");
                 moveEnemiToDefender("#luk");
 
                 //var enemiesLeft=["","sid"]; 
@@ -134,19 +176,19 @@ $(function () {
             case "sidious":
 
                 //move Characters to Enemies and change the class
-                $("#sid").appendTo("#defender");
+                $("#sid").prependTo("#defender");
                 moveEnemiToDefender("#sid");
                 break;
 
             case "maul":
                 //move Characters to Enemies and change the class
-                $("#mau").appendTo("#defender");
+                $("#mau").prependTo("#defender");
                 moveEnemiToDefender("#mau");
                 break;
         }
         //disable click on enemies
-        $("#enemies").click(function () { return false; });
-
+       // $("#enemies").click(function () { return false; });
+        $("#enemies").prop("disabled",true);
         //enable attack
         //$("#attackButton").click(function () { return true; });
         $("#attackButton").prop("disabled",false);
