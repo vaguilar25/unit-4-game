@@ -3,7 +3,7 @@ $(function () {
 
     $("#attackButton").prop("disabled", true);
     $("#newGame").prop("disabled", true);
-    
+
     //Create object to hanndle the characters of the game
     function gameCharacter(nameChar, attPow, countAttPow, hPoints) {
         this.name = nameChar;
@@ -21,9 +21,7 @@ $(function () {
     var sidiousCharacter = new gameCharacter("sidious", 10, 20, 150);
     var maulCharacter = new gameCharacter("maul", 15, 25, 180);
 
-    
     var attackTimes = 1;
-
 
     $(document).on("click", "#attackButton", function (event) {
         $("#enemies").click(function () { return true; });
@@ -31,14 +29,13 @@ $(function () {
         var currentCharacter = $(".imageChar").attr("data") + "Character";
         var currentDefender = $(".imageDefender").attr("data") + "Character";
 
-
         attackHpDecrease(currentCharacter, currentDefender)
 
         console.log(currentCharacter + " vs " + currentDefender);
     });
 
-     //Reset game function
-     function resetGame() {
+    //Reset game function
+    function resetGame() {
         $("#attackButton").prop("disabled", true);
         $("img").prop("disabled", true);
 
@@ -53,11 +50,8 @@ $(function () {
         attackCharacterPower = eval(currentCharacter).attackPower * attackTimes;
 
         //get the character and defender Objects HealtPoints
-        eval(currentCharacter).healthPoints =
-            eval(currentCharacter).healthPoints - eval(currentDefender).counterAttackPower;
-
-        eval(currentDefender).healthPoints =
-            eval(currentDefender).healthPoints - attackCharacterPower;
+        eval(currentCharacter).healthPoints = eval(currentCharacter).healthPoints - eval(currentDefender).counterAttackPower;
+        eval(currentDefender).healthPoints = eval(currentDefender).healthPoints - attackCharacterPower;
 
         //increase attack counter
         attackTimes++
@@ -67,36 +61,32 @@ $(function () {
         $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
         $("#defenderHealtPoints").text(eval(currentDefender).healthPoints);
 
-        $("#gameMessages").text(eval(currentDefender).name + " Attacked you back for "
-            + eval(currentDefender).counterAttackPower + " damage. ");
+        $("#gameMessages").text(eval(currentDefender).name + " Attacked you back for " + eval(currentDefender).counterAttackPower + " damage. ");
 
-        $("#gameMessages2").text("You " + eval(currentCharacter).name + " attacked " + eval(currentDefender).name + " for "
-            + attackCharacterPower + " damage. ");
-
+        $("#gameMessages2").text("You " + eval(currentCharacter).name + " attacked " + eval(currentDefender).name + " for " + attackCharacterPower + " damage. ");
 
         if (eval(currentDefender).healthPoints < 0 && eval(currentCharacter).healthPoints > 0) {
             //Remove Defender from the dom, reset defender health points, Disable attack button, enable defender selection
-           //If there are no more enemies reset game
-           if (+ $("#enemies > img").length === 0) {
-            $("#gameMessages").text("You Won!! - Game Over!!");
-            $("#gameMessages").addClass("winText");
-            resetGame();
-        } else {
-            $(".imageDefender").remove();
-            $("#defenderHealtPoints").text("");
-            $("#attackButton").prop("disabled", true);
-            $("img").prop("disabled", false);
-            $("#gameMessages").text("");
-            $("#gameMessages2").text("");
-        }
+            //If there are no more enemies reset game
+            if (+ $("#enemies > img").length === 0) {
+                $("#gameMessages").text("You Won!! - Game Over!!");
+                $("#gameMessages").addClass("winText");
+                resetGame();
+            } else {
+                $(".imageDefender").remove();
+                $("#defenderHealtPoints").text("");
+                $("#attackButton").prop("disabled", true);
+                $("img").prop("disabled", false);
+                $("#gameMessages").text("");
+                $("#gameMessages2").text("");
+            }
 
             eval(currentCharacter).healthPoints = eval(currentCharacter).healthPoints + eval(currentDefender).counterAttackPower;
             $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
 
-        } else if (((eval(currentCharacter).healthPoints) > (eval(currentDefender).healthPoints))
-            && ((eval(currentDefender).healthPoints) < 0 && (eval(currentCharacter).healthPoints <= 0))) {
-            console.log("Div images length:" + $("#enemies > img").length);
-            console.log("Current healt Points" + eval(currentCharacter).healthPoints);
+        } else if (((eval(currentCharacter).healthPoints) > (eval(currentDefender).healthPoints)) &&
+                   ((eval(currentDefender).healthPoints) < 0 && (eval(currentCharacter).healthPoints <= 0))) {
+            
             if (($("#enemies > img").length === 0) || ((eval(currentCharacter).healthPoints === 0) && ($("#enemies > img").length !== 0))) {
                 $("#gameMessages").text("You Won!! - Game Over!!");
                 $("#gameMessages").addClass("winText");
@@ -146,9 +136,9 @@ $(function () {
 
     //Get OnClick listener for the images
 
-    $(document).on("click", ".imageChar", function (event) {
+    $(document).on("click", ".imageChar", function () {
         //Move the images that are not selected to enemies
-        //   $("#attackButton").click(function () { return false; });
+
         var currentCharacter = $(".imageChar").attr("data") + "Character";
         $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
 
@@ -184,7 +174,7 @@ $(function () {
     });
 
 
-    $(document).on("click", ".imageEnemi", function (event) {
+    $(document).on("click", ".imageEnemi", function () {
 
         switch ($(this).attr("data")) {
 
@@ -213,8 +203,7 @@ $(function () {
                 break;
         }
         //disable click on enemies
-         $("img").prop("disabled", true);
-       
+        $("img").prop("disabled", true);
 
         //enable attack
         $("#attackButton").prop("disabled", false);
@@ -222,11 +211,12 @@ $(function () {
         //add defender health points
         var currentDefender = $(".imageDefender").attr("data") + "Character";
         $("#defenderHealtPoints").text(eval(currentDefender).healthPoints);
+        
     });
 
     //OnClick New Game Reload the page
-    
-    $(document).on("click", "#newGame", function (event) {
+
+    $(document).on("click", "#newGame", function () {
         location.reload();
     });
 
