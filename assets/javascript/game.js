@@ -1,7 +1,10 @@
 $(function () {
+    //Disable attack and new Game buttons.
 
     $("#attackButton").prop("disabled", true);
     $("#newGame").prop("disabled", true);
+    
+    //Create object to hanndle the characters of the game
     function gameCharacter(nameChar, attPow, countAttPow, hPoints) {
         this.name = nameChar;
         this.attackPower = attPow;
@@ -18,8 +21,7 @@ $(function () {
     var sidiousCharacter = new gameCharacter("sidious", 10, 20, 150);
     var maulCharacter = new gameCharacter("maul", 15, 25, 180);
 
-    //var characterHealthPoints = 0;
-    //var defenderHealthPoints = 0;
+    
     var attackTimes = 1;
 
 
@@ -31,7 +33,6 @@ $(function () {
 
 
         attackHpDecrease(currentCharacter, currentDefender)
-
 
         console.log(currentCharacter + " vs " + currentDefender);
     });
@@ -226,7 +227,6 @@ $(function () {
     //OnClick New Game Reload the page
     
     $(document).on("click", "#newGame", function (event) {
-        console.log("reload");
         location.reload();
     });
 
