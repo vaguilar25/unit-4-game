@@ -3,23 +3,23 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-   
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <title>Star Wars RPG</title>
 </head>
 
-<body>
-<figure id="yourCharacter">
-    <img class="imageChar" id="obi" alt="obi" src="assets/images/obiwan.jpeg"  width="150px" height="150px" data="obiwan">
-    <img class="imageChar" id="luk" alt="luk" src="assets/images/luke.jpeg"    width="150px" height="150px" data="luke">
-    <img class="imageChar" id="sid" alt="sid" src="assets/images/sidious.jpeg" width="150px" height="150px" data="sidious">
-    <img class="imageChar" id="mau" alt="mau" src="assets/images/maul.jpeg"    width="150px" height="150px" data="maul">
-    <p id="characterHealtPoints"></p>
+<body class="bodyBack" >
+<h1>Star Wars RPG</h1> <br>
+
+<div id="yourCharacter">
+    <img class="imageChar padImage" id="obi" src="assets/images/obiwan.jpeg"  width="120px" height="120px" data="obiwan">
+    <img class="imageChar padImage" id="luk" src="assets/images/luke.jpeg"    width="120px" height="120px" data="luke">
+    <img class="imageChar padImage" id="sid" src="assets/images/sidious.jpeg" width="120px" height="120px" data="sidious">
+    <img class="imageChar padImage" id="mau" src="assets/images/maul.jpeg"    width="120px" height="120px" data="maul">
+    <p id="characterHealtPoints" class="padImage"></p>
     <p>Your Character</p>
-</figure>
+</div>
 <div id="enemies"></div>
-<div> 
-     <p>Enemies available to attack</p> 
-      <br> <p>Fight Section</p> </div>
+<div> <p>Enemies available to attack</p> <br> <p>Fight Section</p> </div>
 
 <div id="attack"><button id="attackButton">Attack</button> </div>
 
@@ -37,6 +37,6 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script src="assets/javascript/game.js"></script>
+<script src="assets/javascript/game-2.js"></script>
 </body>
 </html>

@@ -18,7 +18,10 @@ $(function () {
     var sidiousCharacter = new gameCharacter("sidious", 10, 20, 150);
     var maulCharacter = new gameCharacter("maul", 15, 25, 180);
 
+    //var characterHealthPoints = 0;
+    //var defenderHealthPoints = 0;
     var attackTimes = 1;
+
 
     $(document).on("click", "#attackButton", function (event) {
         $("#enemies").click(function () { return true; });
@@ -33,13 +36,15 @@ $(function () {
         console.log(currentCharacter + " vs " + currentDefender);
     });
 
-    function resetGame() {
+     //Reset game function
+     function resetGame() {
         $("#attackButton").prop("disabled", true);
         $("img").prop("disabled", true);
 
         $("#gameMessages2").text("");
         $("#newGame").prop("disabled", false);
     };
+
     //Function healthPoints Character decrease
     function attackHpDecrease(currentCharacter, currentDefender) {
 
@@ -70,24 +75,22 @@ $(function () {
 
         if (eval(currentDefender).healthPoints < 0 && eval(currentCharacter).healthPoints > 0) {
             //Remove Defender from the dom, reset defender health points, Disable attack button, enable defender selection
-            
-            eval(currentCharacter).healthPoints = eval(currentCharacter).healthPoints + eval(currentDefender).counterAttackPower;
-            $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
-
-            //If there are no more enemies reset game
-            if (+ $("#enemies > img").length === 0) {
-                $("#gameMessages").text("You Won!! - Game Over!!");
-
-                resetGame();
-            } else {
-                $(".imageDefender").remove();
+           //If there are no more enemies reset game
+           if (+ $("#enemies > img").length === 0) {
+            $("#gameMessages").text("You Won!! - Game Over!!");
+            $("#gameMessages").addClass("winText");
+            resetGame();
+        } else {
+            $(".imageDefender").remove();
             $("#defenderHealtPoints").text("");
             $("#attackButton").prop("disabled", true);
             $("img").prop("disabled", false);
             $("#gameMessages").text("");
             $("#gameMessages2").text("");
-            }
-            console.log("Length of div" + $("#enemies > img").length)
+        }
+
+            eval(currentCharacter).healthPoints = eval(currentCharacter).healthPoints + eval(currentDefender).counterAttackPower;
+            $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
 
         } else if (((eval(currentCharacter).healthPoints) > (eval(currentDefender).healthPoints))
             && ((eval(currentDefender).healthPoints) < 0 && (eval(currentCharacter).healthPoints <= 0))) {
@@ -95,12 +98,14 @@ $(function () {
             console.log("Current healt Points" + eval(currentCharacter).healthPoints);
             if (($("#enemies > img").length === 0) || ((eval(currentCharacter).healthPoints === 0) && ($("#enemies > img").length !== 0))) {
                 $("#gameMessages").text("You Won!! - Game Over!!");
-
+                $("#gameMessages").addClass("winText");
                 resetGame();
             }
 
+
         } else if (eval(currentDefender).healthPoints > 0 && eval(currentCharacter).healthPoints <= 0) {
             $("#gameMessages").text("You have been defeat by " + eval(currentDefender).name + ", you lost");
+            $("#gameMessages").addClass("lostText");
             resetGame();
         }
     }
@@ -207,8 +212,8 @@ $(function () {
                 break;
         }
         //disable click on enemies
-        $("img").prop("disabled", true);
-
+         $("img").prop("disabled", true);
+       
 
         //enable attack
         $("#attackButton").prop("disabled", false);
@@ -219,7 +224,7 @@ $(function () {
     });
 
     //OnClick New Game Reload the page
-
+    
     $(document).on("click", "#newGame", function (event) {
         console.log("reload");
         location.reload();
