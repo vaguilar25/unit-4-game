@@ -1,81 +1,103 @@
 $(function () {
-   
-    $("#attackButton").prop("disabled",true);
-    function gameCharacter(nameChar, attPow, countAttPow,hPoints) {
-        this.name= nameChar;
-        this.attackPower=attPow;
-        this.counterAttackPower=countAttPow;
-        this.healthPoints=hPoints;
 
-        this.getHealthpoint = function() {
+    $("#attackButton").prop("disabled", true);
+    $("#newGame").prop("disabled", true);
+    function gameCharacter(nameChar, attPow, countAttPow, hPoints) {
+        this.name = nameChar;
+        this.attackPower = attPow;
+        this.counterAttackPower = countAttPow;
+        this.healthPoints = hPoints;
+
+        this.getHealthpoint = function () {
             this.healthPoints
-        }   
+        }
     };
 
-    var obiwanCharacter= new gameCharacter("obiwan",8,10,120);
-    var lukeCharacter= new gameCharacter("luke",2,5,100);
-    var sidiousCharacter= new gameCharacter("sidious",10,20,150);
-    var maulCharacter= new gameCharacter("maul",15,25,180);
-    
-    var characterHealthPoints = 0;
-    var defenderHealthPoints=0;
+    var obiwanCharacter = new gameCharacter("obiwan", 8, 10, 120);
+    var lukeCharacter = new gameCharacter("luke", 2, 5, 100);
+    var sidiousCharacter = new gameCharacter("sidious", 10, 20, 150);
+    var maulCharacter = new gameCharacter("maul", 15, 25, 180);
+
+    //var characterHealthPoints = 0;
+    //var defenderHealthPoints = 0;
     var attackTimes = 1;
+
+
     $(document).on("click", "#attackButton", function (event) {
         $("#enemies").click(function () { return true; });
-       //Get Character and defender names.
-       var currentCharacter = $(".imageChar").attr("data") + "Character"; 
-       var currentDefender = $(".imageDefender").attr("data") + "Character";
-      
-     
-       attackHpDecrease(currentCharacter,currentDefender)
+        //Get Character and defender names.
+        var currentCharacter = $(".imageChar").attr("data") + "Character";
+        var currentDefender = $(".imageDefender").attr("data") + "Character";
 
-       
 
-       
-        
+        attackHpDecrease(currentCharacter, currentDefender)
 
-       console.log(currentCharacter + " vs " + currentDefender);
+
+        console.log(currentCharacter + " vs " + currentDefender);
     });
 
     //Function healthPoints Character decrease
-    function attackHpDecrease(currentCharacter,currentDefender) {
-        
+    function attackHpDecrease(currentCharacter, currentDefender) {
+
         //Here we reduce the character attack power
         attackCharacterPower = eval(currentCharacter).attackPower * attackTimes;
 
         //get the character and defender Objects HealtPoints
-        eval(currentCharacter).healthPoints = 
-        eval(currentCharacter).healthPoints - eval(currentDefender).counterAttackPower;
-        
-        eval(currentDefender).healthPoints = 
-        eval(currentDefender).healthPoints - attackCharacterPower;
+        eval(currentCharacter).healthPoints =
+            eval(currentCharacter).healthPoints - eval(currentDefender).counterAttackPower;
+
+        eval(currentDefender).healthPoints =
+            eval(currentDefender).healthPoints - attackCharacterPower;
 
         //increase attack counter
         attackTimes++
+        console.log("Health Power Current Character" + eval(currentCharacter).healthPoints);
 
         //update DOM with new healthpoints
         $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
         $("#defenderHealtPoints").text(eval(currentDefender).healthPoints);
 
-        if ( eval(currentDefender).healthPoints < 0 &&  eval(currentCharacter).healthPoints >0) {
+        $("#gameMessages").text(eval(currentDefender).name + " Attacked you back for "
+            + eval(currentDefender).counterAttackPower + " damage. ");
+
+        $("#gameMessages2").text("You " + eval(currentCharacter).name + " attacked " + eval(currentDefender).name + " for "
+            + attackCharacterPower + " damage. ");
+
+
+        if (eval(currentDefender).healthPoints < 0 && eval(currentCharacter).healthPoints > 0) {
+            //Remove Defender from the dom, reset defender health points, Disable attack button, enable defender selection
             $(".imageDefender").remove();
             $("#defenderHealtPoints").text("");
-            $("#attackButton").prop("disabled",true);
-          //  $("#enemies").click(function () { return true; });
-            $("#enemies").prop("disabled",false);
+            $("#attackButton").prop("disabled", true);
+            $("img").prop("disabled", false);
+            $("#gameMessages").text("");
+            $("#gameMessages2").text("");
+
+            eval(currentCharacter).healthPoints = eval(currentCharacter).healthPoints + eval(currentDefender).counterAttackPower;
+            $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
+
+        } else if (((eval(currentCharacter).healthPoints) > (eval(currentDefender).healthPoints))
+            && ((eval(currentDefender).healthPoints) < 0 && (eval(currentCharacter).healthPoints <= 0))) {
+            console.log("Div images length:" + $("#enemies > img").length);
+            console.log("Current healt Points" + eval(currentCharacter).healthPoints);
+            if (($("#enemies > img").length === 0) || ((eval(currentCharacter).healthPoints === 0) && ($("#enemies > img").length !== 0))) {
+                $("#gameMessages").text("You Won!! - Game Over!!");
+                $("#attackButton").prop("disabled", true);
+                $("img").prop("disabled", true);
+
+                $("#gameMessages2").text("");
+                $("#newGame").prop("disabled",false);
+            }
+
+        } else if (eval(currentDefender).healthPoints > 0 && eval(currentCharacter).healthPoints <= 0) {
+            $("#gameMessages").text("You have been defeat by " + eval(currentDefender).name + ", you lost");
+            $("#attackButton").prop("disabled", true);
+            $("#gameMessages2").text("");
+
+            $("img").prop("disabled", true);
+            $("#newGame").prop("disabled",false);
         }
-
-        console.log("CurrentCharacterHP: " + eval(currentCharacter).healthPoints);
-        console.log("CurrentDefenderHP: " + eval(currentDefender).healthPoints);
     }
-
-    //Function healthPoints Defender Decrease
-
-    //Function check winner return defender Win or Character Win.. 
-    //Global variable of points take the decrease value of Character Win
-
-
-
 
     //Function to remove a class from an array
     function removeClass(arrayElements, className) {
@@ -114,7 +136,9 @@ $(function () {
 
     $(document).on("click", ".imageChar", function (event) {
         //Move the images that are not selected to enemies
-     //   $("#attackButton").click(function () { return false; });
+        //   $("#attackButton").click(function () { return false; });
+        var currentCharacter = $(".imageChar").attr("data") + "Character";
+        $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
 
         switch ($(this).attr("data")) {
             case "obiwan":
@@ -146,35 +170,25 @@ $(function () {
 
 
     });
-    //disable click on Enemies
-    function disableClickOnEnemi(enemiesLeft) {
-        enemiesLeft.forEach(function (element) {
-            $(element).click(function () { return false; });
-        });
-    };
+
+
     $(document).on("click", ".imageEnemi", function (event) {
-        
+
         switch ($(this).attr("data")) {
-            
+
             case "obiwan":
                 //move Characters to Enemies and change the class
                 $("#obi").prependTo("#defender");
                 moveEnemiToDefender("#obi");
-                //var enemiesLeft=["luk","sid"]; 
-                //disableClickOnEnemi(enemiesLeft);
-                $("#enemies").click(function () { return false; });
                 break;
 
             case "luke":
                 //move Characters to Enemies and change the class
                 $("#luk").prependTo("#defender");
                 moveEnemiToDefender("#luk");
-
-                //var enemiesLeft=["","sid"]; 
-                //disableClickOnEnemi(enemiesLeft);
                 break;
-            case "sidious":
 
+            case "sidious":
                 //move Characters to Enemies and change the class
                 $("#sid").prependTo("#defender");
                 moveEnemiToDefender("#sid");
@@ -187,13 +201,24 @@ $(function () {
                 break;
         }
         //disable click on enemies
-       // $("#enemies").click(function () { return false; });
-        $("#enemies").prop("disabled",true);
-        //enable attack
-        //$("#attackButton").click(function () { return true; });
-        $("#attackButton").prop("disabled",false);
+         $("img").prop("disabled", true);
+       
 
+        //enable attack
+        $("#attackButton").prop("disabled", false);
+
+        //add defender health points
+        var currentDefender = $(".imageDefender").attr("data") + "Character";
+        $("#defenderHealtPoints").text(eval(currentDefender).healthPoints);
     });
+
+    //OnClick New Game Reload the page
+    
+    $(document).on("click", "#newGame", function (event) {
+        console.log("reload");
+        location.reload();
+    });
+
 
 
 })
