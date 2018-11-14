@@ -9,6 +9,14 @@
     font-weight: bold;
 }
 
+.characterName {
+    padding-left:65px;
+}
+.characterHPoint {
+    padding-left:75px;
+}
+
+
 .padImage {
     padding-left: 30px;
 }

@@ -39,8 +39,10 @@ $(function () {
         $("#attackButton").prop("disabled", true);
         $("img").prop("disabled", true);
 
+        
         $("#gameMessages2").text("");
         $("#newGame").prop("disabled", false);
+
     };
 
     //Function healthPoints Character decrease
@@ -74,6 +76,7 @@ $(function () {
                 resetGame();
             } else {
                 $(".imageDefender").remove();
+                $("#defenderName").text("");
                 $("#defenderHealtPoints").text("");
                 $("#attackButton").prop("disabled", true);
                 $("img").prop("disabled", false);
@@ -85,8 +88,8 @@ $(function () {
             $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
 
         } else if (((eval(currentCharacter).healthPoints) > (eval(currentDefender).healthPoints)) &&
-                   ((eval(currentDefender).healthPoints) < 0 && (eval(currentCharacter).healthPoints <= 0))) {
-            
+            ((eval(currentDefender).healthPoints) < 0 && (eval(currentCharacter).healthPoints <= 0))) {
+
             if (($("#enemies > img").length === 0) || ((eval(currentCharacter).healthPoints === 0) && ($("#enemies > img").length !== 0))) {
                 $("#gameMessages").text("You Won!! - Game Over!!");
                 $("#gameMessages").addClass("winText");
@@ -140,7 +143,12 @@ $(function () {
         //Move the images that are not selected to enemies
 
         var currentCharacter = $(".imageChar").attr("data") + "Character";
-        $("#characterHealtPoints").text(eval(currentCharacter).healthPoints);
+
+        $("#charName").text($(this).attr("data"));
+        $("#characterHealtPoints").text($(this).attr("data-hp"));
+
+        console.log("Name: " + $(this).attr("data"));
+        console.log("HP: " + $(this).attr("data-hp"));
 
         switch ($(this).attr("data")) {
             case "obiwan":
@@ -175,7 +183,7 @@ $(function () {
 
 
     $(document).on("click", ".imageEnemi", function () {
-
+        $("#defenderName").text($(this).attr("data"));
         switch ($(this).attr("data")) {
 
             case "obiwan":
@@ -211,7 +219,7 @@ $(function () {
         //add defender health points
         var currentDefender = $(".imageDefender").attr("data") + "Character";
         $("#defenderHealtPoints").text(eval(currentDefender).healthPoints);
-        
+
     });
 
     //OnClick New Game Reload the page

@@ -11,11 +11,12 @@
 <h1>Star Wars RPG</h1> <br>
 
 <div id="yourCharacter">
-    <img class="imageChar padImage" id="obi" src="assets/images/obiwan.jpeg"  width="120px" height="120px" data="obiwan">
-    <img class="imageChar padImage" id="luk" src="assets/images/luke.jpeg"    width="120px" height="120px" data="luke">
-    <img class="imageChar padImage" id="sid" src="assets/images/sidious.jpeg" width="120px" height="120px" data="sidious">
-    <img class="imageChar padImage" id="mau" src="assets/images/maul.jpeg"    width="120px" height="120px" data="maul">
-    <p id="characterHealtPoints" class="padImage"></p>
+    <p class="characterName" id="charName" ></p>
+    <img class="imageChar padImage" id="obi" src="assets/images/obiwan.jpeg"  width="120px" height="120px" data="obiwan" data-hp="120">
+    <img class="imageChar padImage" id="luk" src="assets/images/luke.jpeg"    width="120px" height="120px" data="luke" data-hp="100">
+    <img class="imageChar padImage" id="sid" src="assets/images/sidious.jpeg" width="120px" height="120px" data="sidious" data-hp="150">
+    <img class="imageChar padImage" id="mau" src="assets/images/maul.jpeg"    width="120px" height="120px" data="maul" data-hp="180">
+    <p id="characterHealtPoints" class="characterHPoint"></p>
     <p>Your Character</p>
 </div>
 <div id="enemies"></div>
@@ -24,8 +25,10 @@
 <div id="attack"><button id="attackButton">Attack</button> </div>
 
 <p>Defender</p>
+<br>
+<p class="characterName" id="defenderName" ></p>
 <div id="defender">
-    <p id="defenderHealtPoints"></p>
+    <p id="defenderHealtPoints" class="characterHPoint" ></p>
     <p id="gameMessages"></p>
     <p id="gameMessages2"></p>
     <button id="newGame">Reset Game</button>
