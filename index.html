@@ -4,34 +4,37 @@
 <head>
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+   
     <title>Star Wars RPG</title>
 </head>
 
 <body class="bodyBack" >
-<h1>Star Wars RPG</h1> <br>
 
-<div id="yourCharacter" class="padImage" >
+<h1>Star Wars RPG <br> <button id="newGame">Reset Game</button> </h1> 
+
+<p class="padImage">Your Character</p>
+<div id="yourCharacter"  >
     <p class="characterName" id="charName" ></p>
     <img class="imageChar padImage" id="obi" src="assets/images/obiwan.jpeg"  width="120px" height="120px" data="obiwan" data-hp="120">
     <img class="imageChar padImage" id="luk" src="assets/images/luke.jpeg"    width="120px" height="120px" data="luke" data-hp="100">
     <img class="imageChar padImage" id="sid" src="assets/images/sidious.jpeg" width="120px" height="120px" data="sidious" data-hp="150">
     <img class="imageChar padImage" id="mau" src="assets/images/maul.jpeg"    width="120px" height="120px" data="maul" data-hp="180">
     <p id="characterHealtPoints" class="characterHPoint"></p>
-    <p>Your Character</p>
-</div>
+    
+</div><br>
 <div id="enemies"></div>
 <div> <p class="padImage">Enemies available to attack</p> <br> <p class="padImage">Fight Section</p> </div>
 
 <div id="attack" class="padImage"><button id="attackButton">Attack</button> </div>
-
+<br>
 <p class="padImage">Defender</p>
 <br>
 <p class="characterName " id="defenderName" ></p>
 <div id="defender">
-    <p id="defenderHealtPoints" class="characterHPoint" ></p>
-    <p id="gameMessages" class="padImage"></p>
-    <p id="gameMessages2" class="padImage"></p>
-    <button id="newGame">Reset Game</button>
+    <p id="defenderHealtPoints" class="characterHPoint" ></p> 
+    <p id="gameMessages" class="padImage message"></p>
+    <p id="gameMessages2" class="padImage message"></p>
+    
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

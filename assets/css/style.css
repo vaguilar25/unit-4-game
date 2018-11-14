@@ -9,14 +9,22 @@
     font-weight: bold;
 }
 
+.characterHPoint{
+    color:#0b0fb7;
+    font-weight: bold;
+}
 .characterName {
     padding-left:65px;
+    color:#0b0fb7;
+    font-weight: bold;
 }
 .characterHPoint {
     padding-left:75px;
 }
 
-
+.message {
+    color:black;
+}
 .padImage {
     padding-left: 30px;
 }
@@ -26,7 +34,7 @@ h1 {
     font-size: 20pt;
     color:#0b0fb7;
     font-weight: bold;
-    padding-top:12px;
+    padding-top:2px;
 }
 
 @keyframes lost {
